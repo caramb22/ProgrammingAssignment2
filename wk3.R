@@ -1,3 +1,4 @@
+### ORIGINAL VERSION:
 ## The purpose of this exercise was to write two functions.
 ## One function needed to create and temporarily store a square matrix,
 ## and the other function needed to calculate the inverse of that matrix. 
@@ -8,7 +9,6 @@
 
 makeCacheMatrix <- function(x) {
   matrix(data=1:4,ncol=x,nrow=x)
-  
 }
 
 
@@ -21,13 +21,17 @@ cacheSolve <- function(x, ...) {
 }
 
 ### EDITED VERSION
+## FUNCTION 1:
 
-## FUNCTION 1: 
+## I got rid of the default data values but otherwise left it the same. 
 
 makeCacheMatrix <- function(x,data) {
   matrix(data=data,ncol=x,nrow=x)
-  
 }
+
+## FUNCTION 2:
+## I included an internal storage variable (y), and a clause to look at
+## whether the contents of y were new or already calculated.
 
 cacheSolve <- function(x,data) {
   y<-makeCacheMatrix(x=x,data=data)  
@@ -35,6 +39,18 @@ cacheSolve <- function(x,data) {
     ifelse(y=z,y,z)  
 }
 
+### The following code is what I used to test the modified functions.
+
+## Generate some fake data
+a<-sample(1:8,4)
+b<-sample(1:8,4)
+c<-sample(1:8,4)
+d<-sample(1:8,4)
+e<-sample(1:8,4)
+f<-sample(1:8,4)
+g<-sample(1:8,4)
+
+## Try the second function out on the fake data.
 cacheSolve(x=2,data=a)
 cacheSolve(x=2,data=b)
 cacheSolve(x=2,data=c)
@@ -43,13 +59,6 @@ cacheSolve(x=2,data=e)
 cacheSolve(x=2,data=f)
 cacheSolve(x=2,data=g)
 
-
-invMat2<-cacheSolve(x=2,data=1:4)
-
-a<-sample(1:8,4)
-b<-sample(1:8,4)
-c<-sample(1:8,4)
-d<-sample(1:8,4)
-e<-sample(1:8,4)
-f<-sample(1:8,4)
-g<-sample(1:8,4)
+## Limitation: I'm still not sure how to test the cacheSolve funtion's
+## ability to save time by pulling up an existing inverse matrix
+## if it has already been computed. Clearly, I have work to do!
