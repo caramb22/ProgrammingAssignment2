@@ -1,21 +1,40 @@
-## The purpose of this exercise was to write two functions.
-## One function needed to create and temporarily store a square matrix,
-## and the other function needed to calculate the inverse of that matrix. 
-
-## FUNCTION 1: This function creates a square matrix (a matrix with an equal
-## number of columns and rows and--for the purposes of testing this function--
-## a unique value in each cell.
-
-makeCacheMatrix <- function(x) {
-  matrix(data=1:4,ncol=x,nrow=x)
-  
+# A function that can create a matrix and cache its inverse.
+makeCacheMatrix <- function(x = matrix()) {
+  # Create an empty object to hold the inverse.
+  inverse <- NULL
+  # Create another function that retrieves and stores information. 
+  set <- function(y) {
+    x <<- y
+    inverse <<- NULL
+  }
+  # A function that returns data.
+  get <- function() x
+  # A function that retrieves the inverse matrix.
+  setInverse <- function(inverse) inverse <<- inverse
+  # A function that returns the inverse matrix.
+  getInverse <- function() inverse
+  list(set = set, get = get,
+       setInverse = setInverse,
+       getInverse = getInverse)
 }
 
-
-## FUNCTION 2: This function uses function 1 internally, and it
-## returns a matrix that is the inverse of the first matrix, using the 
-## solve function.
-
+# A function that checks whether an inverse has already been cached.
 cacheSolve <- function(x, ...) {
-  solve(makeCacheMatrix(x))
+  # Look at the inverse matrix cache... 
+  inverse <- x$getInverse()
+  # ... and determine whether is has a cached matrix in it already. 
+  if(!is.null(inverse)) {
+    # If so, pop out a message indicating the cached matrix is being retrieved,
+    message("do you have any Grey Poupon?")
+    # and return the cached inverse matrix.
+    return(inverse)
+  }
+  # If the inverse has not been cached, pull up the matix...
+  data <- x$get()
+  # ...and calculate its inverse.
+  inverse <- solve(data, ...)
+  # Append that information to the dataset...
+  x$setInverse(inverse)
+  # And show it.
+  inverse
 }
